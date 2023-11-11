@@ -1,28 +1,27 @@
-const tarefa = document.querySelector("#tarefa");
-const btn = document.querySelector("#btn");
-const lista = document.querySelector("#lista");
-
-btn.addEventListener("click", function(){
-    if(tarefa.value == ""){
-        alert("Não é possível inserir uma tarefa sem nome!");
+$("#btn").click(function(e){
+    const tarefa = $("#tarefa").val();
+    
+    if(tarefa == ""){
+        alert("Digite uma tarefa válida!");
     } else {
-        lista.innerHTML += `<li>
+        $("#lista").append(`<li>
                                 <i class="fa-solid fa-circle-check check"></i>
-                                <span>${ tarefa.value }</span>
+                                <span>${ tarefa }</span>
                                 <i class="fa-solid fa-trash close"></i>
-                            </li>`;
+                            </li>`
+                            )
     }
-    tarefa.value = "";
+    $("#tarefa").val("");
+    $("#tarefa").focus();
 
-    const close = document.querySelectorAll(".close");
-    for(let i=0; i<close.length; i++){
-        close[i].addEventListener("click", function(){
-            close[i].parentElement.remove();
-        });
-    }
+    $(".close").each(function(){
+        $(this).click(function(){
+            $(this).parent().remove();
+        })
+    })
 
-    lista.addEventListener("click", function(e){
-        e.target.parentElement.querySelector(".check").style.color = "#349223";
-        e.target.parentElement.querySelector("span").style.textDecoration = "line-through";
-    });
-});
+    $("#lista li").click(function(){
+        $(this).find(".check").css("color", "#349223");
+        $(this).find("span").css("textDecoration", "line-through");
+    })
+})
